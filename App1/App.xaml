@@ -5,4 +5,9 @@
     xmlns:local="using:App1"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary Source="Style/Dictionary.xaml"/>
+    </Application.Resources>
+
 </Application>
+
