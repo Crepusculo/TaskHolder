@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using App1.Animation;
+using App1.Models;
 using App1.Utils;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -29,13 +30,14 @@ namespace App1.Views
         {
             this.Transitions = PageTransitions.SetUpPageAnimation(4);
             this.InitializeComponent();
+            List<TaskDataModel> tasks = NetworkUtil.GetInstance().GetTasks("13391859311","2333");
             var ret = "";
             foreach (var p in tasks)
             {
                 ret += p.ToString();
                 ret += "\n";
             }
-            TextBlock.Text = NetworkUtil.GetInstance().GetTasks("13391859311");
+            TextBlock.Text = ret;
         }
     }
 }

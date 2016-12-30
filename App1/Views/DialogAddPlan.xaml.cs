@@ -44,12 +44,16 @@ namespace App1.Views
 
                     break;
                 case 2:
-                    var dialog = new DialogTask();
-                    dialog.MinWidth = this.ActualWidth;
-                    dialog.MaxWidth = this.ActualWidth;
-                    var result = dialog.ShowAsync();
+                    var dialogTask = new DialogTask();
+                    dialogTask.MinWidth = this.ActualWidth;
+                    dialogTask.MaxWidth = this.ActualWidth;
+                    var resultTask = dialogTask.ShowAsync();
                     break;
                 case 3:
+                    var dialogGoal = new DialogGoal();
+                    dialogGoal.MinWidth = this.ActualWidth;
+                    dialogGoal.MaxWidth = this.ActualWidth;
+                    var resultGoal = dialogGoal.ShowAsync();
                     break;
                 case 4:
                     break;

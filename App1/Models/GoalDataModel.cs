@@ -3,24 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite.Net.Attributes;
 
 namespace App1.Models
 {
     class GoalDataModel : BaseDataModel
     {
-        private List<SubTaskDataModel> SubTasks { get; set; }
-        private int Progress { get; set; }
-        private List<string> UserGroup { get; set; }
-        private Dictionary<string, int> Type { get; set; }
-        private DateTime StartTime { get; set; }
-        private DateTime DeadLine { get; set; }
-    }
+        /// <summary>
+        /// ProgressPrecent = WorkAmount/WorkProgress
+        /// </summary>
+        public int WorkAmount { get; set; }
 
-    class SubGoalDataModel
-    {
-        private string Name { get; set; }
-        private string Describe { get; set; }
-        private int Progress { get; set; }
-        private bool IsProgress { get; set; }
+        public int WorkProgress { get; set; }
+        /// <summary>
+        /// Task work group
+        /// </summary>
+        public string UserGroup { get; set; }
+        /// <summary>
+        /// Task Type
+        /// </summary>
+        [MaxLength(20)]
+        public string Type { get; set; }
+        /// <summary>
+        /// IF Repeat is false -> Interval == -1 
+        /// </summary>
+
+        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset EndTime { get; set; }
+
+        public override string ToString()
+        {
+            return this.Id + "\t" + this.Name + "\t" + this.BelongsTo + "\t" + this.Points + "\n" +
+                   this.Description + "\t" + this.Content + "\n" +
+                   this.WorkProgress + "/" + this.WorkAmount + "\n" +
+                   this.StartTime + " to " + this.EndTime + "\n";
+        }
     }
 }

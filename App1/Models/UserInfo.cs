@@ -25,8 +25,7 @@ namespace App1.Models
         {
             string contents = JsonUtil<UserInfo>.ObjectToJson(info);
 
-//            File.SetAttributes(path, FileAttributes.Normal);
-//            File.WriteAllText(path, contents, Encoding.UTF8);
+
         }
 
         public async void LoadInfo()

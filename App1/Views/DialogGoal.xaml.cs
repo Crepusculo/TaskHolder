@@ -17,14 +17,15 @@ namespace App1.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class DialogTask : ContentDialog
+    public sealed partial class DialogGoal
+        : ContentDialog
     {
         private UserInfo user;
         List<StrWrap> types;
         List<StrWrap> groups;
         List<StrWrap> frequency;
 
-        public DialogTask()
+        public DialogGoal()
         {
             Task.Run(() => InitializeData());
             this.InitializeComponent();
@@ -50,11 +51,6 @@ namespace App1.Views
             groups = NetworkUtil.GetUserGroup(user.Token, user.Username);
         }
 
-        private void ReapeatToggleSwitch_OnToggled(object sender, RoutedEventArgs e)
-        {
-            StartTimePicker.IsEnabled = !ReapeatToggleSwitch.IsOn;
-            EndTimePicker.IsEnabled = !ReapeatToggleSwitch.IsOn;
-        }
 
         private void ScoreButtonMinusOnClick(object sender, RoutedEventArgs e)
         {
@@ -93,7 +89,7 @@ namespace App1.Views
             try
             {
                 // Initialize
-                var model = new TaskDataModel();
+                var model = new GoalDataModel();
                 // Standard
                 var taskTitle = TaskTitle.Text;
                 var taskPoints = Convert.ToInt32(ScoreTextBox.Text);
@@ -107,21 +103,12 @@ namespace App1.Views
                     model.UserGroup = taskGroup;
                 }
                 // 
-                var taskReapeat = ReapeatToggleSwitch.IsOn;
+                
 
-                var interval = 0;
-                if (taskReapeat)
-                {
-                    var taskRepeat = ((StrWrap) ReapeatComboBox.SelectedItem).str;
-                    interval = new TimeToInt().TranslateTime(taskRepeat);
-                }
-                else
-                {
-                    var taskStartTime = StartTimePicker.Date;
-                    var taskEndTime = EndTimePicker.Date;
-                    model.StartTime = taskStartTime;
-                    model.EndTime = taskEndTime;
-                }
+                var taskStartTime = StartTimePicker.Date;
+                var taskEndTime = EndTimePicker.Date;
+                model.StartTime = taskStartTime;
+                model.EndTime = taskEndTime;
 
 
                 model.BelongsTo = user.Username;
@@ -134,8 +121,6 @@ namespace App1.Views
                 model.WorkProgress = 0;
 
                 model.Type = taskType;
-                model.Repeat = taskReapeat;
-                model.Interval = interval;
 
                 if (model.Name == "")
                 {
@@ -150,7 +135,7 @@ namespace App1.Views
                     return;
                 }
 
-                NetworkUtil.GetInstance().PostAddNewTask(user.Username, user.Token, model);
+                NetworkUtil.GetInstance().PostAddNewGoal(user.Username,user.Token, model);
                 this.Hide();
                 return;
             }
@@ -178,7 +163,6 @@ namespace App1.Views
             WorkAmount.Text = "0";
             TaskContentTextBox.Text = "";
             TypeComboBox.SelectedIndex = -1;
-            ReapeatToggleSwitch.IsOn = false;
             GroupToggleSwitch.IsOn = false;
             GroupComboBox.SelectedIndex = -1;
             StartTimePicker.Date = DateTimeOffset.Now;
