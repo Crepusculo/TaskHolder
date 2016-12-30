@@ -70,52 +70,52 @@
                         <TextBlock Name="AvatarText" Text="My Avatar" HorizontalAlignment="Center" />
                     </StackPanel>
                     <ListBox
-                        Name="IconsListBox"
+                        Name="IconsListBox" 
                         SelectionMode="Single"
                         SelectionChanged="IconsListBox_OnSelectionChanged">
-                        <ListBoxItem>
+                        <ListBoxItem Style="{StaticResource NavListBoxStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="30" Text="&#xE710;" />
                                 <TextBlock Text="Add New Plan" FontSize="24" Margin="24,0,24,0"
                                            FontFamily="/Assets/fonts/BEON.ttf#beon" />
                             </StackPanel>
                         </ListBoxItem>
-                        <ListBoxItem>
+                        <ListBoxItem Style="{StaticResource NavListBoxStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="30" Text="&#xE80F;" />
                                 <TextBlock Text="Home" FontSize="24" Margin="24,0,24,0"
                                            FontFamily="/Assets/fonts/BEON.ttf#beon" />
                             </StackPanel>
                         </ListBoxItem>
-                        <ListBoxItem>
+                        <ListBoxItem Style="{StaticResource NavListBoxStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="30" Text="&#xE24A;" />
                                 <TextBlock Text="Achievement" FontSize="24" Margin="24,0,24,0"
                                            FontFamily="/Assets/fonts/BEON.ttf#beon" />
                             </StackPanel>
                         </ListBoxItem>
-                        <ListBoxItem>
+                        <ListBoxItem Style="{StaticResource NavListBoxStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="30" Text="&#xEE40;" />
                                 <TextBlock Text="Task" FontSize="24" Margin="24,0,24,0"
                                            FontFamily="/Assets/fonts/BEON.ttf#beon" />
                             </StackPanel>
                         </ListBoxItem>
-                        <ListBoxItem>
+                        <ListBoxItem Style="{StaticResource NavListBoxStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="30" Text="&#xE006;" />
                                 <TextBlock Text="Goal" FontSize="24" Margin="24,0,24,0"
                                            FontFamily="/Assets/fonts/BEON.ttf#beon" />
                             </StackPanel>
                         </ListBoxItem>
-                        <ListBoxItem>
+                        <ListBoxItem Style="{StaticResource NavListBoxStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="30" Text="&#xE125;" />
                                 <TextBlock Text="Group" FontSize="24" Margin="24,0,24,0"
                                            FontFamily="/Assets/fonts/BEON.ttf#beon" />
                             </StackPanel>
                         </ListBoxItem>
-                        <ListBoxItem>
+                        <ListBoxItem Style="{StaticResource NavListBoxStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="30" Text="&#xE102;" />
                                 <TextBlock Text="PlayStore" FontSize="24" Margin="24,0,24,0"

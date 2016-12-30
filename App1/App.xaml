@@ -6,8 +6,7 @@
     RequestedTheme="Light">
 
     <Application.Resources>
-        <ResourceDictionary Source="Style/Dictionary.xaml"/>
+        <ResourceDictionary Source="Style/Dictionary.xaml" />
     </Application.Resources>
 
 </Application>
-
