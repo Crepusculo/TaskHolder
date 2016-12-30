@@ -1,0 +1,217 @@
+﻿<ContentDialog
+    x:Name="NewTaskDialog"
+    x:Class="App1.Views.DialogTask"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utils="using:App1.Utils"
+    mc:Ignorable="d"
+    BorderBrush="Transparent" BorderThickness="0"
+    Padding="0"
+    FullSizeDesired="True"
+    Background="Transparent">
+
+    <Grid Background="White" BorderThickness="2" BorderBrush="DimGray" Padding="24,0,24,0"
+          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.Resources>
+            <SolidColorBrush x:Key="PrimaryColor" Color="#009688" />
+            <x:Double x:Key="PrimarySize">24</x:Double>
+            <x:Double x:Key="GridHeaderMaxWidth">500</x:Double>
+            <x:Double x:Key="GridHeaderMinWidth">300</x:Double>
+            <x:String x:Key="PrimaryTitle1">Standard</x:String>
+            <x:String x:Key="PrimaryTitle2">Type</x:String>
+            <x:String x:Key="PrimaryTitle3">Schedule</x:String>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="90*" />
+        </Grid.RowDefinitions>
+        <RelativePanel Grid.Row="0" x:Name="TaskDialogTitle"
+                       Background="{StaticResource PrimaryColor}" Margin="-24,0,-24,0">
+            <TextBlock Text="New Task"
+                       FontSize="48" FontWeight="Light"
+                       Margin="48,0,0,0" Foreground="White" />
+            <Button x:Name="CheckButton"
+                    RelativePanel.AlignRightWithPanel="True" Margin="30,20,0,0"
+                    FontFamily="Segoe MDL2 Assets" Content="&#xE73E;" FontSize="24"
+                    Background="Transparent" Foreground="White" Click="CheckButton_OnClick" />
+            <Button x:Name="CancelButton"
+                    RelativePanel.AlignRightWithPanel="True" Margin="30,20,40,0"
+                    FontFamily="Segoe MDL2 Assets" Content="&#xE711;" FontSize="24"
+                    Background="Transparent" Foreground="White" Click="CancelButton_OnClick" />
+            <Button x:Name="RefreshButton"
+                    RelativePanel.AlignRightWithPanel="True" Margin="30,20,80,0"
+                    FontFamily="Segoe MDL2 Assets" Content="&#xE72C;" FontSize="24"
+                    Background="Transparent" Foreground="White" Click="RefreshButton_OnClick" />
+        </RelativePanel>
+        <Grid Grid.Row="1" x:Name="TaskDialogContent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="30*" />
+            </Grid.RowDefinitions>
+            <GridViewHeaderItem Grid.Row="0" Content="{StaticResource PrimaryTitle1}"
+                                MaxWidth="{StaticResource GridHeaderMaxWidth}"
+                                MinWidth="{StaticResource GridHeaderMinWidth}"
+                                HorizontalAlignment="Left"
+                                Foreground="{StaticResource PrimaryColor}" FontSize="{StaticResource PrimarySize}" />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="30*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Height="40" MaxWidth="600" BorderBrush="Gray">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Title" Grid.Column="0" Margin="15,0,24,0"
+                               HorizontalAlignment="Right" VerticalAlignment="Center"
+                               FontSize="21" />
+                    <TextBox Grid.Column="1" x:Name="TaskTitle" 
+                             MaxWidth="400" MinWidth="200"
+                             HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" />
+                </Grid>
+                <Grid Grid.Column="1" Height="40" MaxWidth="300" BorderBrush="Gray" Margin="24,0,24,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Work Amount" Grid.Column="0" Margin="15,0,24,0" 
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               FontSize="21" />
+                    <TextBox Grid.Column="1" x:Name="WorkAmount" PlaceholderText="Only Num"
+                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                             TextChanging="Numberic_OnTextChanging" />
+                </Grid>
+                <Grid Grid.Column="2" Height="40" MaxWidth="300" BorderBrush="Gray" Margin="24,0,24,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Points" Grid.Column="0" Margin="15,0,24,0"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               FontSize="21" />
+                    <Grid Grid.Column="1" Height="40" MaxWidth="300" BorderThickness="2" BorderBrush="Gray">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="25*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="-" Grid.Column="0" FontWeight="SemiBold" FontSize="16"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Click="ScoreButtonMinusOnClick" />
+                        <TextBox x:Name="ScoreTextBox" InputScope="Number" BorderThickness="0" Foreground="DimGray"
+                                 Text="0" Grid.Column="2" FontSize="20" FontWeight="SemiBold"
+                                 TextAlignment="Center" TextChanging="Numberic_OnTextChanging"/>
+                        <Button Content="+" Grid.Column="4" FontWeight="SemiBold" FontSize="16"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Click="ScoreButtonAddOnClick" />
+                    </Grid>
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Content" Grid.Column="0" Margin="15,0,24,0"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"
+                           FontSize="21" />
+                <TextBox Grid.Column="1" x:Name="TaskContentTextBox"
+                         MinWidth="200"
+                         HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0" />
+            </Grid>
+            <GridViewHeaderItem Grid.Row="3" Content="{StaticResource PrimaryTitle2}"
+                                MaxWidth="{StaticResource GridHeaderMaxWidth}"
+                                MinWidth="{StaticResource GridHeaderMinWidth}"
+                                HorizontalAlignment="Left"
+                                Foreground="{StaticResource PrimaryColor}" FontSize="{StaticResource PrimarySize}" />
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="10*" />
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="TypeComboBox" Grid.Column="0"
+                          Margin="0,0,0,0"
+                          ItemsSource="{x:Bind types}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="utils:StrWrap">
+                            <TextBlock Text="{x:Bind str}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ToggleSwitch x:Name="GroupToggleSwitch" Header="Work Group" Grid.Column="2"
+                              FontSize="15"
+                              OffContent="Off" OnContent="On"
+                              HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <ComboBox x:Name="GroupComboBox" Grid.Column="3"
+                          Margin="0,0,0,0"
+                          IsEnabled="{x:Bind GroupToggleSwitch.IsOn, Mode=OneWay}"
+                          ItemsSource="{x:Bind groups}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="utils:StrWrap">
+                            <TextBlock Text="{x:Bind str}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            <GridViewHeaderItem Grid.Row="5" Content="{StaticResource PrimaryTitle3}"
+                                MaxWidth="{StaticResource GridHeaderMaxWidth}"
+                                MinWidth="{StaticResource GridHeaderMinWidth}"
+                                HorizontalAlignment="Left"
+                                Foreground="{StaticResource PrimaryColor}" FontSize="{StaticResource PrimarySize}" />
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="20*" />
+                </Grid.ColumnDefinitions>
+                <ToggleSwitch x:Name="ReapeatToggleSwitch" Header="Reapeat"
+                              FontSize="15" Toggled="ReapeatToggleSwitch_OnToggled"
+                              OffContent="Off" OnContent="On"
+                              HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <ComboBox x:Name="ReapeatComboBox" Grid.Column="2"
+                          Margin="0,0,0,0"
+                          IsEnabled="{x:Bind ReapeatToggleSwitch.IsOn, Mode=OneWay}"
+                          ItemsSource="{x:Bind frequency}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="utils:StrWrap">
+                            <TextBlock Text="{x:Bind str}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            <Grid Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="20*" />
+                </Grid.ColumnDefinitions>
+                <DatePicker Grid.Column="0" x:Name="StartTimePicker" Header="Start Time" FontSize="15"
+                            HorizontalAlignment="Left" />
+                <DatePicker Grid.Column="2" x:Name="EndTimePicker" Header="End Time" FontSize="15"
+                            HorizontalAlignment="Left" />
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentDialog>
