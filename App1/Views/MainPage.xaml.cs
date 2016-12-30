@@ -66,7 +66,6 @@ namespace App1
             var item = IconsListBox.SelectedItem;
             var idx = IconsListBox.SelectedIndex;
             var val = IconsListBox.SelectedValue;
-            Debug.WriteLine(idx);
             switch (idx)
             {
                 case (int)SplitViewIndex.Add:
@@ -84,6 +83,7 @@ namespace App1
                     Frame.Navigate(typeof(PageGoal));
                     break;
                 case (int)SplitViewIndex.Shop:
+                    Frame.Navigate(typeof(PageStore));
                     break;
                 case (int)SplitViewIndex.Home:
                     Frame.Navigate(typeof(PageHome));
@@ -97,7 +97,6 @@ namespace App1
             AvatarEllipse.SetValue(Ellipse.HeightProperty, 100);
             AvatarEllipse.SetValue(Ellipse.WidthProperty, 100);
             Avatar.SetValue(StackPanel.WidthProperty, 230);
-
             Avatar.SetValue(StackPanel.HorizontalAlignmentProperty, HorizontalAlignment.Center);
             AvatarText.SetValue(TextBlock.VisibilityProperty, Visibility.Visible);
         }
