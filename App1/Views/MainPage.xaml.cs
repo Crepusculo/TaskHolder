@@ -44,10 +44,10 @@ namespace App1
             UserInfo userInfo = new UserInfo() {Username = "13391859311"};
             Windows.Storage.StorageFolder folder =
                             Windows.Storage.ApplicationData.Current.LocalFolder;
-            Task.Run(() =>
-            {
-                folder.CreateFolderAsync(userInfo.Username);
-            });
+//            Task.Run(() =>
+//            {
+//                folder.CreateFolderAsync(userInfo.Username);
+//            });
 
             ApplyColorToTitleBar();
             

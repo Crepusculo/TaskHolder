@@ -105,6 +105,7 @@
     <Compile Include="Utils\NetworkUtilDataPart.cs" />
     <Compile Include="Utils\JsonUtil.cs" />
     <Compile Include="Utils\NetworkUtilUserPart.cs" />
+    <Compile Include="Utils\NullBoolConverter.cs" />
     <Compile Include="Utils\StrWrap.cs" />
     <Compile Include="Utils\TimeToInt.cs" />
     <Compile Include="Utils\TypeHelper.cs" />

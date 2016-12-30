@@ -5,10 +5,57 @@
     xmlns:local="using:App1.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:App1.Models"
+    xmlns:utils="using:App1.Utils"
     mc:Ignorable="d">
+    <Page.Resources>
+        <utils:IsDoneConverter x:Key="IsDoneConverter" />
+        
+    </Page.Resources>
 
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <ScrollViewer 
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Visible">
+        <Grid Background="#009688">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="400" />
+            </Grid.RowDefinitions>
+            <ListView ItemsSource="{x:Bind goalsData}" x:Name="GoalsList"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.Resources>
+                </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:GoalDataModel">
+                        <Grid Background="White"
+                              Padding="8" Margin="12,1,12,1"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                <CheckBox 
+                                    Content="{x:Bind Name}" FontSize="18"
+                                    IsChecked="{x:Bind Done, Converter={StaticResource IsDoneConverter}}" />
+                            </StackPanel>
+                            <ProgressBar Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,2,0,4" Foreground="{StaticResource PrimarySolidColorBrush}"
+                                         Value="{x:Bind WorkPercent}" />
+                            <TextBlock Grid.Row="2" Text="{x:Bind Content}" Foreground="DimGray" />
+                            <AppBar Grid.Row="3" IsSticky="True">
+                                <AppBarButton></AppBarButton>
+                            </AppBar>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ScrollViewer>
 </Page>

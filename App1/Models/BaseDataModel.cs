@@ -7,7 +7,7 @@ using SQLite.Net.Attributes;
 
 namespace App1.Models
 {
-    class BaseDataModel
+    public class BaseDataModel
     {   
         /// <summary>
         /// Unique ID
@@ -23,5 +23,7 @@ namespace App1.Models
         /// </summary>
         public string BelongsTo { get; set; }
         public int Points { get; set; }
+
+        public bool Done { get; set; }
     }
 }

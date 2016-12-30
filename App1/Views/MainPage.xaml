@@ -6,15 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <GridLength x:Key="SplitSize">55</GridLength>
+        <x:Double x:Key="SplitSizeD">55</x:Double>
+        <x:Double x:Key="SplitSizeO">250</x:Double>
+        <Color x:Key="PrimarySolidColor">#009688</Color>
+        <SolidColorBrush Color="{StaticResource PrimarySolidColor}" x:Key="PrimarySolidColorBrush" />
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.Resources>
-            <GridLength x:Key="SplitSize">55</GridLength>
-            <x:Double x:Key="SplitSizeD">55</x:Double>
-            <x:Double x:Key="SplitSizeO">250</x:Double>
-            <Color x:Key="PrimarySolidColor">#009688</Color>
-            <SolidColorBrush Color="{StaticResource PrimarySolidColor}" x:Key="PrimarySolidColorBrush" />
-        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
