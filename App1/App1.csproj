@@ -150,11 +150,17 @@
     <Compile Include="Views\DialogTask.xaml.cs">
       <DependentUpon>DialogTask.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SimpleDialogProgressPicker.xaml.cs">
+      <DependentUpon>SimpleDialogProgressPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SimpleDialogTypePicker.xaml.cs">
+      <DependentUpon>SimpleDialogTypePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SimpleDialogGroupPicker.xaml.cs">
+      <DependentUpon>SimpleDialogGroupPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SimpleDialogDatePicker.xaml.cs">
       <DependentUpon>SimpleDialogDatePicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Test.xaml.cs">
-      <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -220,11 +226,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SimpleDialogDatePicker.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\SimpleDialogProgressPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Test.xaml">
+    <Page Include="Views\SimpleDialogTypePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SimpleDialogGroupPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SimpleDialogDatePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

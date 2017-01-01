@@ -1,0 +1,27 @@
+﻿<ContentDialog
+    x:Class="App1.Views.SimpleDialogTypePicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utils="using:App1.Utils"
+    mc:Ignorable="d"
+    IsPrimaryButtonEnabled="True" IsSecondaryButtonEnabled="True"
+    PrimaryButtonText="Ok" SecondaryButtonText="Cancel"
+    PrimaryButtonClick="SimpleDialogDatePicker_OnPrimaryButtonClick"
+    SecondaryButtonClick="SimpleDialogDatePicker_OnSecondaryButtonClick"
+    BorderThickness="2" BorderBrush="Transparent" Background="Gainsboro">
+    <StackPanel Background="Transparent">
+        <ComboBox x:Name="TypeComboBox" Grid.Column="0" Header="Change Type"
+                          Margin="0,0,0,0"
+                          ItemsSource="{x:Bind types}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="utils:StrWrap">
+                    <TextBlock Text="{x:Bind str}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </StackPanel>
+</ContentDialog>

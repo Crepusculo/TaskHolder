@@ -86,8 +86,15 @@ namespace App1.Views
             {
                 ((TaskDataModel) model).StartTime = StartTime.Date;
                 ((TaskDataModel) model).EndTime = EndTime.Date;
-                NetworkUtil.UpdateTaskDataModel(user.Username, user.Token, (TaskDataModel) model);
-//                ((PageTask)this.root).goalsData = NetworkUtil.GetInstance().GetGoals("13391859311", "2333");
+                DebugUtil.WriteLine(this, model.ToString());
+                NetworkUtil.UpdateTaskDataModel(user.Username, user.Token, (TaskDataModel)model);
+
+                TextBlock startTextBlock = DebugUtil.FindControl<TextBlock>(_root, typeof(TextBlock),
+                    "StartTimeTextBlock");
+                TextBlock endTextBlock = DebugUtil.FindControl<TextBlock>(_root, typeof(TextBlock),
+                    "EndTimeTextBlock");
+                startTextBlock.Text = DateUtil.DateToString(((TaskDataModel)model).StartTime);
+                endTextBlock.Text = DateUtil.DateToString(((TaskDataModel)model).EndTime);
             }
         }
 

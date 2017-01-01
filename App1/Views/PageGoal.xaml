@@ -68,20 +68,22 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <ProgressBar Grid.Row="0" Margin="0,2,0,4" Height="10" Padding="10"
+                                <ProgressBar x:Name="ProgressBar"
+                                             Grid.Row="0" Margin="0,2,0,4" Height="10"
                                              HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                              Foreground="{StaticResource PrimarySolidColorBrush}"
-                                             Value="{x:Bind WorkPercent}" />
+                                             Maximum="{x:Bind WorkAmount}"
+                                             Value="{x:Bind WorkProgress}" />
                                 <Grid Background="{StaticResource PrimarySolidColorBrush}" Grid.Row="0"
                                       CornerRadius="4"
                                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Button x:Name="Progress" Margin="24,2,24,2" Tag="False" Background="Transparent"
+                                    <Button x:Name="ProgressInfoButton" Margin="24,2,24,2" Tag="False" Opacity="50"
+                                            Background="Transparent"
                                             FontSize="18" Visibility="Collapsed"
                                             HorizontalAlignment="Center" VerticalAlignment="Center"
                                             Foreground="White"
                                             FontFamily="/Assets/fonts/BEON.ttf#beon"
-                                            Click="Progress_OnClick" >
-                                    </Button>
+                                            Click="Progress_OnClick" />
                                 </Grid>
 
                             </Grid>
@@ -97,15 +99,17 @@
                                 <StackPanel Orientation="Horizontal" Grid.Column="0"
                                             Margin="24,0,24,0">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xE8EC;" />
-                                    <TextBlock Text="{x:Bind Type}" FontSize="20" Margin="8,0,8,0"
+                                    <TextBlock x:Name="TypeTextBlock" Text="{x:Bind Type}" FontSize="20"
+                                               Margin="8,0,8,0"
                                                VerticalAlignment="Center"
                                                FontFamily="/Assets/fonts/BEON.ttf#beon" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Column="1" 
+                                <StackPanel Orientation="Horizontal" Grid.Column="1"
                                             Margin="24,0,24,0">
 
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xE716;" />
-                                    <TextBlock Text="{x:Bind UserGroup}" FontSize="20" Margin="8,0,8,0"
+                                    <TextBlock x:Name="UserGroupTextBlock" Text="{x:Bind UserGroup}" FontSize="20"
+                                               Margin="8,0,8,0"
                                                VerticalAlignment="Center"
                                                FontFamily="/Assets/fonts/BEON.ttf#beon" />
                                 </StackPanel>
@@ -113,20 +117,20 @@
                                             Margin="24,0,24,0">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xEC92;" />
                                     <TextBlock x:Name="StartTimeTextBlock"
-                                        Text="{x:Bind StartTime,Converter={StaticResource DateConverter},Mode=OneWay}"
-                                        VerticalAlignment="Center"
-                                        FontSize="20" Margin="8,0,8,0"
-                                        FontFamily="/Assets/fonts/BEON.ttf#beon" />
+                                               Text="{x:Bind StartTime,Converter={StaticResource DateConverter},Mode=OneWay}"
+                                               VerticalAlignment="Center"
+                                               FontSize="20" Margin="8,0,8,0"
+                                               FontFamily="/Assets/fonts/BEON.ttf#beon" />
                                     <TextBlock
                                         Text="-"
                                         VerticalAlignment="Center"
                                         FontSize="20" Margin="8,0,8,0"
                                         FontFamily="/Assets/fonts/BEON.ttf#beon" />
                                     <TextBlock x:Name="EndTimeTextBlock"
-                                        Text="{x:Bind EndTime,Converter={StaticResource DateConverter},Mode=OneWay}"
-                                        VerticalAlignment="Center"
-                                        FontSize="20" Margin="8,0,8,0"
-                                        FontFamily="/Assets/fonts/BEON.ttf#beon" />
+                                               Text="{x:Bind EndTime,Converter={StaticResource DateConverter},Mode=OneWay}"
+                                               VerticalAlignment="Center"
+                                               FontSize="20" Margin="8,0,8,0"
+                                               FontFamily="/Assets/fonts/BEON.ttf#beon" />
                                 </StackPanel>
                             </GridView>
                         </Grid>

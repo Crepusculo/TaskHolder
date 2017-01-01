@@ -100,7 +100,8 @@ namespace App1.Views
             var progrssbar = (ProgressBar) ((Grid) root.Children[1]).Children[0];
             if (((ToggleButton) sender).IsChecked == true)
             {
-                button.Content = " ( " + model.WorkProgress + " / " + model.WorkAmount + " ) " + model.WorkPercent + "%";
+                button.Content = " ( " + model.WorkProgress + " / " + model.WorkAmount + " ) "
+                                 + 100*((double) model.WorkProgress/(double) model.WorkAmount) + "%";
                 button.Visibility = Visibility.Visible;
             }
             else
@@ -117,6 +118,10 @@ namespace App1.Views
         private void Progress_OnClick(object sender, RoutedEventArgs e)
         {
             DebugUtil.WriteLine(sender, "Click!");
+            var root = (Grid) VisualTreeHelper.GetParent((DependencyObject) sender);
+            var model = (GoalDataModel) root.DataContext;
+            var groupPicker = new SimpleDialogProgressPicker(ref user, ref model, root);
+            var result = groupPicker.ShowAsync();
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -126,16 +131,20 @@ namespace App1.Views
 
             DebugUtil.WriteLine(sender, "SelectionChanged!");
             var lists = ((GridView) sender);
+            IAsyncOperation<ContentDialogResult> result;
             switch (lists.SelectedIndex)
             {
                 case 0:
+                    var typePicker = new SimpleDialogTypePicker(ref user, ref model, root);
+                    result = typePicker.ShowAsync();
                     break;
                 case 1:
-                    DebugUtil.WriteLine(this,model.ToString());
+                    var groupPicker = new SimpleDialogGroupPicker(ref user, ref model, root);
+                    result = groupPicker.ShowAsync();
                     break;
                 case 2:
-                    var dialog = new SimpleDialogDatePicker(ref user,ref model, root);
-                    var result = dialog.ShowAsync();
+                    var datePicker = new SimpleDialogDatePicker(ref user, ref model, root);
+                    result = datePicker.ShowAsync();
                     break;
                 case 3:
                     break;

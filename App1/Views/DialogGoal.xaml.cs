@@ -123,7 +123,6 @@ namespace App1.Views
 
                 model.WorkAmount = taskWorkAmount;
                 model.WorkProgress = 0;
-                model.WorkPercent = 0;
 
                 model.Type = taskType;
 
