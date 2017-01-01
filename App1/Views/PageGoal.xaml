@@ -13,130 +13,174 @@
         <utils:IsDoneConverter x:Key="IsDoneConverter" />
         <utils:BooleanToVisibilityConverter x:Key="VisibilityConverter" />
         <utils:DateConverter x:Key="DateConverter" />
+        <utils:BooleanReverse x:Key="BooleanReverse" />
     </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <CommandBar Grid.Row="0" x:Name="CommandBar"
+                    Background="{StaticResource PrimarySolidColorBrush}">
+            <CommandBar.Content>
+                <StackPanel Orientation="Horizontal">
+                    <AppBarButton Icon="Refresh" Foreground="White" Label="Refresh" Click="Refresh_OnClick"
+                                  IsCompact="{Binding IsOpen,ElementName=CommandBar,Converter={StaticResource BooleanReverse}}" />
+                    <AppBarButton Icon="Add" Foreground="White" Label="Add" Click="ButtonBase_OnClick"
+                                  IsCompact="{Binding IsOpen,ElementName=CommandBar,Converter={StaticResource BooleanReverse}}" />
+                </StackPanel>
+            </CommandBar.Content>
+            <AppBarButton Icon="Camera" Label="Camera" x:Name="Camera" Click="Camera_OnClick" Foreground="White" />
+<!--            <AppBarButton Icon="Calendar" Foreground="White" Label="Sort by date" />-->
+<!--            <AppBarButton Icon="List" Foreground="White" Label="Sort by progress" />-->
+<!--            <AppBarButton Icon="Contact" Foreground="White" Label="Group by contact" />-->
+<!--            <AppBarButton Icon="MapPin" Foreground="White" Label="Group by type" />-->
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Unsorted" x:Name="Unsorted" Click="SortMethod_Changed" />
+                <AppBarButton Label="ByTitle" x:Name="ByTitle" Click="SortMethod_Changed" />
+                <AppBarButton Label="ByGroup" x:Name="ByGroup" Click="SortMethod_Changed" />
+                <AppBarButton Label="ByDeadLine" x:Name="ByDeadLine" Click="SortMethod_Changed" />
+                <AppBarButton Label="ByType" x:Name="ByType" Click="SortMethod_Changed" />
+                <AppBarButton Label="ByProgress" x:Name="ByProgress" Click="SortMethod_Changed" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+        <ScrollViewer Grid.Row="1" x:Name="ScrollViewer"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Visible">
+            <ScrollViewer.Background>
+                <ImageBrush Stretch="UniformToFill" ImageSource="../Assets/49087210_p0_master1200.jpg"/>
+                
+            </ScrollViewer.Background>
+            <Grid x:Name="Root">
 
-    <ScrollViewer
-        HorizontalScrollBarVisibility="Disabled"
-        VerticalScrollBarVisibility="Visible">
-        <Grid Background="#009688">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="400" />
-            </Grid.RowDefinitions>
-            <ListView ItemsSource="{x:Bind goalsData}" x:Name="GoalsList"
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                      SelectionChanged="GoalsList_SelectionChanged">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemContainerTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition />
-                    </TransitionCollection>
-                </ListView.ItemContainerTransitions>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:GoalDataModel">
-                        <Grid Background="White"
-                              Padding="8" Margin="12,1,12,1"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <RelativePanel Grid.Row="0">
-                                <CheckBox
-                                    RelativePanel.AlignLeftWithPanel="True"
-                                    RelativePanel.AlignVerticalCenterWithPanel="True"
-                                    Content="{x:Bind Name}" FontSize="18"
-                                    IsChecked="{x:Bind Done, Converter={StaticResource IsDoneConverter}}" />
-                                <ToggleButton x:Name="MoreButton" Style="{StaticResource TransparentButton}"
-                                              Margin="12,4,12,4"
-                                              RelativePanel.AlignRightWithPanel="True"
-                                              Click="MoreButton_OnChecked"
-                                              Content="More" />
-                                <ToggleButton x:Name="ProgressButton" Style="{StaticResource TransparentButton}"
-                                              Margin="12,4,12,4"
-                                              RelativePanel.LeftOf="MoreButton"
-                                              Click="ProgressButton_OnClick"
-                                              Content="Progress" />
-                            </RelativePanel>
-                            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ListView ItemsSource="{x:Bind goalsDataOrder,Mode=OneWay}" x:Name="GoalsList" Margin="0,24,0,0"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AllowDrop="True"
+                          CanReorderItems="True" DataContextChanged="GoalsList_OnDataContextChanged">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition />
+                        </TransitionCollection>
+                    </ListView.ItemContainerTransitions>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:GoalDataModel">
+                            <Grid Background="White"
+                                  Padding="8" Margin="12,1,12,1"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <ProgressBar x:Name="ProgressBar"
-                                             Grid.Row="0" Margin="0,2,0,4" Height="10"
-                                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                             Foreground="{StaticResource PrimarySolidColorBrush}"
-                                             Maximum="{x:Bind WorkAmount}"
-                                             Value="{x:Bind WorkProgress}" />
-                                <Grid Background="{StaticResource PrimarySolidColorBrush}" Grid.Row="0" Opacity="50"
-                                      CornerRadius="4"
-                                      HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Button x:Name="ProgressInfoButton" Margin="24,2,24,2" Tag="False"
-                                            Background="Transparent"
-                                            FontSize="18" Visibility="Collapsed"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                                            Foreground="White"
-                                            FontFamily="/Assets/fonts/BEON.ttf#beon"
-                                            Click="Progress_OnClick" />
+                                <RelativePanel Grid.Row="0">
+                                    <CheckBox x:Name="CheckBox"
+                                              RelativePanel.AlignLeftWithPanel="True"
+                                              RelativePanel.AlignVerticalCenterWithPanel="True"
+                                              Content="{x:Bind Name}" FontSize="18"
+                                              Click="CheckBox_OnClick"
+                                              IsChecked="{x:Bind Done, Converter={StaticResource IsDoneConverter}}" />
+                                    <ToggleButton x:Name="MoreButton" Style="{StaticResource TransparentButton}"
+                                                  Margin="12,4,12,4"
+                                                  RelativePanel.AlignRightWithPanel="True"
+                                                  Click="MoreButton_OnChecked"
+                                                  Content="More" />
+                                    <ToggleButton x:Name="ProgressButton" Style="{StaticResource TransparentButton}"
+                                                  Margin="12,4,12,4"
+                                                  RelativePanel.LeftOf="MoreButton"
+                                                  Click="ProgressButton_OnClick"
+                                                  Content="Progress" />
+                                </RelativePanel>
+                                <Grid Grid.Row="1" x:Name="ProgressGrid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <ProgressBar x:Name="ProgressBar" ValueChanged="ProgressBar_OnValueChanged"
+                                                 Grid.Row="0" Margin="0,2,0,4" Height="10"
+                                                 HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                 Foreground="{StaticResource PrimarySolidColorBrush}"
+                                                 Maximum="{x:Bind WorkAmount}"
+                                                 Value="{x:Bind WorkProgress}" />
+                                    <Grid Background="{StaticResource PrimarySolidColorBrush}" Grid.Row="0"
+                                          Opacity="30"
+                                          CornerRadius="4"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Button x:Name="ProgressInfoButton" Margin="24,2,24,2" Tag="False"
+                                                Background="Transparent"
+                                                FontSize="18" Visibility="Collapsed"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                Foreground="White"
+                                                FontFamily="/Assets/fonts/BEON.ttf#beon"
+                                                Click="Progress_OnClick" />
+                                    </Grid>
+
                                 </Grid>
+                                <TextBlock Grid.Row="2" Text="{x:Bind Content}" Foreground="DimGray" />
 
+                                <GridView Grid.Row="3" SelectionMode="Single" Visibility="Collapsed"
+                                          SelectionChanged="Selector_OnSelectionChanged">
+                                    <GridView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </GridView.ItemsPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="0"
+                                                Margin="24,0,24,0">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xE8EC;" />
+                                        <TextBlock x:Name="TypeTextBlock" Text="{x:Bind Type}" FontSize="20"
+                                                   Margin="8,0,8,0"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="/Assets/fonts/BEON.ttf#beon" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="1"
+                                                Margin="24,0,24,0">
+
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xE716;" />
+                                        <TextBlock x:Name="UserGroupTextBlock" Text="{x:Bind UserGroup}" FontSize="20"
+                                                   Margin="8,0,8,0"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="/Assets/fonts/BEON.ttf#beon" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2"
+                                                Margin="24,0,24,0">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xEC92;" />
+                                        <TextBlock x:Name="StartTimeTextBlock"
+                                                   Text="{x:Bind StartTime,Converter={StaticResource DateConverter},Mode=OneWay}"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="20" Margin="8,0,8,0"
+                                                   FontFamily="/Assets/fonts/BEON.ttf#beon" />
+                                        <TextBlock
+                                            Text="-"
+                                            VerticalAlignment="Center"
+                                            FontSize="20" Margin="8,0,8,0"
+                                            FontFamily="/Assets/fonts/BEON.ttf#beon" />
+                                        <TextBlock x:Name="EndTimeTextBlock"
+                                                   Text="{x:Bind EndTime,Converter={StaticResource DateConverter},Mode=OneWay}"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="20" Margin="8,0,8,0"
+                                                   FontFamily="/Assets/fonts/BEON.ttf#beon" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="10" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock Foreground="DarkRed" FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xE10A;" />
+                                        <TextBlock
+                                            Text="Delete Item" Foreground="DarkRed"
+                                            VerticalAlignment="Center"
+                                            FontSize="16" Margin="8,0,8,0"
+                                            FontFamily="/Assets/fonts/BEON.ttf#beon" />
+                                    </StackPanel>
+                                </GridView>
                             </Grid>
-                            <TextBlock Grid.Row="2" Text="{x:Bind Content}" Foreground="DimGray" />
-
-                            <GridView Grid.Row="3" SelectionMode="Single" Visibility="Collapsed"
-                                      SelectionChanged="Selector_OnSelectionChanged">
-                                <GridView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </GridView.ItemsPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Column="0"
-                                            Margin="24,0,24,0">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xE8EC;" />
-                                    <TextBlock x:Name="TypeTextBlock" Text="{x:Bind Type}" FontSize="20"
-                                               Margin="8,0,8,0"
-                                               VerticalAlignment="Center"
-                                               FontFamily="/Assets/fonts/BEON.ttf#beon" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Column="1"
-                                            Margin="24,0,24,0">
-
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xE716;" />
-                                    <TextBlock x:Name="UserGroupTextBlock" Text="{x:Bind UserGroup}" FontSize="20"
-                                               Margin="8,0,8,0"
-                                               VerticalAlignment="Center"
-                                               FontFamily="/Assets/fonts/BEON.ttf#beon" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Column="2"
-                                            Margin="24,0,24,0">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Text="&#xEC92;" />
-                                    <TextBlock x:Name="StartTimeTextBlock"
-                                               Text="{x:Bind StartTime,Converter={StaticResource DateConverter},Mode=OneWay}"
-                                               VerticalAlignment="Center"
-                                               FontSize="20" Margin="8,0,8,0"
-                                               FontFamily="/Assets/fonts/BEON.ttf#beon" />
-                                    <TextBlock
-                                        Text="-"
-                                        VerticalAlignment="Center"
-                                        FontSize="20" Margin="8,0,8,0"
-                                        FontFamily="/Assets/fonts/BEON.ttf#beon" />
-                                    <TextBlock x:Name="EndTimeTextBlock"
-                                               Text="{x:Bind EndTime,Converter={StaticResource DateConverter},Mode=OneWay}"
-                                               VerticalAlignment="Center"
-                                               FontSize="20" Margin="8,0,8,0"
-                                               FontFamily="/Assets/fonts/BEON.ttf#beon" />
-                                </StackPanel>
-                            </GridView>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-    </ScrollViewer>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
 </Page>

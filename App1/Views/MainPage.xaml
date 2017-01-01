@@ -34,9 +34,6 @@
                     Click="HamburgerButton_OnClick" Background="Transparent" />
         </Grid>
 
-        <AppBar Name="AppBar" Grid.Row="0" Background="{StaticResource PrimarySolidColorBrush}"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="55,0,0,0" />
-
         <Frame x:Name="Frame" Grid.Row="1" Margin="55,0,0,0">
             <Frame.Transitions>
                 <TransitionCollection>

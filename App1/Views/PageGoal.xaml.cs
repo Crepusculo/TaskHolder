@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -7,12 +9,14 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using App1.Animation;
 using App1.Models;
@@ -28,8 +32,18 @@ namespace App1.Views
         List<StrWrap> groups;
         List<StrWrap> types;
         private UserInfo user;
-        public List<GoalDataModel> goalsData;
+
+        public ObservableCollection<GoalDataModel> goalsDataOrder
+        {
+            get { return (ObservableCollection<GoalDataModel>) GetValue(NewsCollectionProperty); }
+            set { SetValue(NewsCollectionProperty, value); }
+        }
+
         private bool b = true;
+
+        public static readonly DependencyProperty NewsCollectionProperty =
+            DependencyProperty.Register("NewsCollection", typeof(ObservableCollection<GoalDataModel>),
+                typeof(GoalDataModel), new PropertyMetadata(null));
 
         public PageGoal()
         {
@@ -41,10 +55,12 @@ namespace App1.Views
         private async void InitializeData()
         {
             user = new UserInfo() {Password = "123456", Username = "13391859311", Token = "20000"};
-            goalsData = NetworkUtil.GetInstance().GetGoals(user.Username, user.Token);
+            goalsDataOrder =
+                new ObservableCollection<GoalDataModel>(NetworkUtil.GetInstance().GetGoals(user.Username, user.Token));
             types = NetworkUtil.GetUserType(user.Token, user.Username);
             groups = NetworkUtil.GetUserGroup(user.Token, user.Username);
         }
+
 
         ///
         /// root
@@ -110,10 +126,6 @@ namespace App1.Views
             }
         }
 
-        private void GoalsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DebugUtil.WriteLine(sender, "SelectionChanged!");
-        }
 
         private void Progress_OnClick(object sender, RoutedEventArgs e)
         {
@@ -131,6 +143,7 @@ namespace App1.Views
 
             DebugUtil.WriteLine(sender, "SelectionChanged!");
             var lists = ((GridView) sender);
+
             IAsyncOperation<ContentDialogResult> result;
             switch (lists.SelectedIndex)
             {
@@ -147,14 +160,91 @@ namespace App1.Views
                     result = datePicker.ShowAsync();
                     break;
                 case 3:
+                case 10:
+                    goalsDataOrder.Remove(model);
+                    NetworkUtil.DeleteGoalDataModel(user.Username, user.Token, model);
                     break;
             }
             ((GridView) sender).SelectedIndex = -1;
         }
 
-        private void GroupComboBoxButton_OnClick(object sender, RoutedEventArgs e)
+
+        ///
+        /// root
+        ///  |- father
+        ///  |    |- checkbox
+        ///  |    |- morebutton
+        ///  |    |- progressbutton
+        ///  |   
+        ///  |- Grid
+        ///  |    |- *ProgressBar
+        ///  |    |- Grid
+        ///  |        |-Button
+        ///  |- TextBox
+        ///  |- GridView
+        ///  ...
+        private void ProgressBar_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            DebugUtil.WriteLine(sender, "Click!");
+            var progressBar = sender as ProgressBar;
+            var grid = VisualTreeHelper.GetParent((DependencyObject) sender);
+            var root = VisualTreeHelper.GetParent(grid);
+            var father = VisualTreeHelper.GetChild(root, 0);
+            CheckBox checkBox = (CheckBox) VisualTreeHelper.GetChild(father, 0);
+            checkBox.IsChecked = progressBar.Value >= progressBar.Maximum;
+        }
+
+        private void CheckBox_OnClick(object sender, RoutedEventArgs e)
+        {
+            var root = (RelativePanel) VisualTreeHelper.GetParent((DependencyObject) sender);
+            var model = (GoalDataModel) root.DataContext;
+            model.Done = (bool) ((CheckBox) sender).IsChecked;
+            NetworkUtil.UpdateGoalDataModel(user.Username, user.Token, model);
+        }
+
+        private void SortMethod_Changed(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void GoalsList_OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            Debug.WriteLine("ITEMS CHANGED");
+        }
+
+        private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var mg = new DialogGoal(goalsDataOrder);
+            mg.MinWidth = this.ActualWidth;
+            mg.MaxWidth = this.ActualWidth;
+            await mg.ShowAsync();
+        }
+
+        private void Refresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            goalsDataOrder = NetworkUtil.GetInstance().GetGoals(user.Username, user.Token);
+        }
+
+        private async void Camera_OnClick(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation =
+                Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+
+            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                var stream = (FileRandomAccessStream)await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+                var image = new BitmapImage();
+                image.SetSource(stream);
+                ScrollViewer.Background = new ImageBrush()
+                {
+                    ImageSource = image,
+                    Stretch = Stretch.UniformToFill
+                };
+            }
         }
     }
 }

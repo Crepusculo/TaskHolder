@@ -13,12 +13,22 @@ namespace App1.Models
 {
     public class UserInfo
     {
+        public enum SortMethod
+        {
+            Unsorted,
+            ByTitle,
+            ByGroup,
+            ByDeadLine,
+            ByType,
+            ByProgress
+        }
+
         static string path = @"C:\Users\airfr\Desktop\userinfo.json";
         public string Nickname { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
-
+        public SortMethod sortMethod { get; set; }
         public string CurrentFileBuffer { get; private set; }
 
         public async void SaveInfo(UserInfo info)

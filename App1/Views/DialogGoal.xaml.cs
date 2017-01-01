@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
@@ -24,12 +25,24 @@ namespace App1.Views
         List<StrWrap> types;
         List<StrWrap> groups;
         List<StrWrap> frequency;
+        private ObservableCollection<GoalDataModel> lists;
+        private bool goalPage;
 
         public DialogGoal()
         {
             Task.Run(() => InitializeData());
             this.InitializeComponent();
             InitializeDatePicker();
+            goalPage = false;
+        }
+
+        public DialogGoal(ObservableCollection<GoalDataModel> lists)
+        {
+            Task.Run(() => InitializeData());
+            this.InitializeComponent();
+            InitializeDatePicker();
+            this.lists = lists;
+            goalPage = true;
         }
 
         private void InitializeDatePicker()
@@ -107,7 +120,7 @@ namespace App1.Views
                     model.UserGroup = "None";
                 }
                 // 
-                
+
 
                 var taskStartTime = StartTimePicker.Date;
                 var taskEndTime = EndTimePicker.Date;
@@ -139,7 +152,9 @@ namespace App1.Views
                     return;
                 }
 
-                NetworkUtil.GetInstance().PostAddNewGoal(user.Username,user.Token, model);
+                if (goalPage == true)
+                    lists.Add(model);
+                NetworkUtil.GetInstance().PostAddNewGoal(user.Username, user.Token, model);
                 this.Hide();
                 return;
             }

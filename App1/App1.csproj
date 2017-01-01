@@ -91,6 +91,8 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="Assets\41209470_p0.png" />
+    <Content Include="Assets\49087210_p0_master1200.jpg" />
     <Content Include="Assets\fonts\ULTRALIGHT.TTF" />
     <Content Include="Assets\fonts\BEON.TTF" />
     <PRIResource Include="Resources.resw" />
@@ -101,6 +103,7 @@
     <Compile Include="Animation\PageTransitions.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Utils\BooleanConverter.cs" />
+    <Compile Include="Utils\BooleanReverse.cs" />
     <Compile Include="Utils\BooleanToVisibilityConverter.cs" />
     <Compile Include="Utils\DateConverter.cs" />
     <Compile Include="Utils\DateUtil.cs" />

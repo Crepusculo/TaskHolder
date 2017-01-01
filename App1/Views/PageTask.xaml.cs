@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -30,7 +31,7 @@ namespace App1.Views
         {
             this.Transitions = PageTransitions.SetUpPageAnimation(4);
             this.InitializeComponent();
-            List<TaskDataModel> tasks = NetworkUtil.GetInstance().GetTasks("13391859311","2333");
+            ObservableCollection<TaskDataModel> tasks = NetworkUtil.GetInstance().GetTasks("13391859311","2333");
             var ret = "";
             foreach (var p in tasks)
             {
