@@ -102,6 +102,10 @@ namespace App1.Views
                     var taskGroup = ((StrWrap) GroupComboBox.SelectedItem).str;
                     model.UserGroup = taskGroup;
                 }
+                else
+                {
+                    model.UserGroup = "None";
+                }
                 // 
                 
 

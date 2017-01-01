@@ -11,7 +11,7 @@ using FileAttributes = System.IO.FileAttributes;
 
 namespace App1.Models
 {
-    class UserInfo
+    public class UserInfo
     {
         static string path = @"C:\Users\airfr\Desktop\userinfo.json";
         public string Nickname { get; set; }

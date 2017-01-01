@@ -8,7 +8,7 @@ using SQLite.Net.Attributes;
 
 namespace App1.Models
 {
-    class TaskDataModel : BaseDataModel
+    public class TaskDataModel : BaseDataModel
     {   
         /// <summary>
         /// JSON

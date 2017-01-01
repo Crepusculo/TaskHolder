@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using App1.Models;
 using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
@@ -133,6 +134,43 @@ namespace App1.Utils
             return playStore;
         }
 
+        public static void UpdateGoalDataModel(string username, string token,GoalDataModel model)
+        {
+            string path = Path.Combine(Windows.Storage.ApplicationData.
+                Current.LocalFolder.Path, username, DataBase.Goal);
+            var db = new SQLiteConnection(new SQLitePlatformWinRT(), path);
+            db.TraceListener = new DebugTraceListener();
+            var c = db.CreateTable<GoalDataModel>();
+            var info = db.GetMapping(typeof(GoalDataModel));
+            db.InsertOrReplace(model);
+            db.Close();
+        }
+
+        public static void UpdateGoalDataModel(string username, string token, GoalDataModel model,UIElement page)
+        {
+            string path = Path.Combine(Windows.Storage.ApplicationData.
+                Current.LocalFolder.Path, username, DataBase.Goal);
+            var db = new SQLiteConnection(new SQLitePlatformWinRT(), path);
+            db.TraceListener = new DebugTraceListener();
+            var c = db.CreateTable<GoalDataModel>();
+            var info = db.GetMapping(typeof(GoalDataModel));
+            db.InsertOrReplace(model);
+            db.Close();
+        }
+
+        public static void UpdateTaskDataModel(string username, string token, TaskDataModel model)
+        {
+            string path = Path.Combine(Windows.Storage.ApplicationData.
+                Current.LocalFolder.Path, username, DataBase.Task);
+            var db = new SQLiteConnection(new SQLitePlatformWinRT(), path);
+            db.TraceListener = new DebugTraceListener();
+            var c = db.CreateTable<TaskDataModel>();
+            var info = db.GetMapping(typeof(TaskDataModel));
+            db.InsertOrReplace(model);
+            db.Close();
+            
+        }
+
         public class DebugTraceListener : ITraceListener
         {
             public void Receive(string message)
@@ -140,5 +178,7 @@ namespace App1.Utils
                 Debug.WriteLine(message);
             }
         }
+
+        
     }
 }
