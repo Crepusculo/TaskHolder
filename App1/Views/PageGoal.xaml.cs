@@ -40,8 +40,8 @@ namespace App1.Views
 
         private async void InitializeData()
         {
-            goalsData = NetworkUtil.GetInstance().GetGoals("13391859311", "2333");
             user = new UserInfo() {Password = "123456", Username = "13391859311", Token = "20000"};
+            goalsData = NetworkUtil.GetInstance().GetGoals(user.Username, user.Token);
             types = NetworkUtil.GetUserType(user.Token, user.Username);
             groups = NetworkUtil.GetUserGroup(user.Token, user.Username);
         }

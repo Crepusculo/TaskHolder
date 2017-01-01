@@ -74,10 +74,10 @@
                                              Foreground="{StaticResource PrimarySolidColorBrush}"
                                              Maximum="{x:Bind WorkAmount}"
                                              Value="{x:Bind WorkProgress}" />
-                                <Grid Background="{StaticResource PrimarySolidColorBrush}" Grid.Row="0"
+                                <Grid Background="{StaticResource PrimarySolidColorBrush}" Grid.Row="0" Opacity="50"
                                       CornerRadius="4"
                                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Button x:Name="ProgressInfoButton" Margin="24,2,24,2" Tag="False" Opacity="50"
+                                    <Button x:Name="ProgressInfoButton" Margin="24,2,24,2" Tag="False"
                                             Background="Transparent"
                                             FontSize="18" Visibility="Collapsed"
                                             HorizontalAlignment="Center" VerticalAlignment="Center"
